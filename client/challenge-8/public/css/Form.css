@@ -1,0 +1,26 @@
+.form-box {
+    margin-top: 8vh;
+    display: grid;
+}
+
+h1 {
+    justify-self: center;
+}
+
+form {
+    border: solid 1px;
+    display: grid;
+}
+
+label {
+    margin-left: 5vw;
+}
+
+input {
+    margin-left: 5vw;
+}
+
+button {
+    margin: 20px;
+    float: right;
+}

@@ -1,0 +1,478 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This documentation is for completing challenge 8.",
+    "version": "1.0.0",
+    "title": "Binar Challenge Chapter 8",
+    "contact": {
+      "email": "hugoalberigo@gmail.com"
+    }
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "players",
+      "description": "Access to players of this app"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/players": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Create new player",
+        "description": "",
+        "operationId": "createPlayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Player object that will be created",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "player"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "player@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password"
+                },
+                "experience": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 99
+                },
+                "lvl": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "string",
+                  "example": "SUCCESS"
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "example": "player"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "player@mail.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "password"
+                    },
+                    "experience": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 99
+                    },
+                    "lvl": {
+                      "type": "integer",
+                      "format": "int32",
+                      "example": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "username or email or password field cannot be empty"
+          },
+          "500": {
+            "description": "Some error occurred while creating the Player."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "get all players (with query parameters)",
+        "description": "",
+        "operationId": "findAllPlayers",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "username",
+            "description": "Filter by username",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "description": "Filter by email",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "experience",
+            "description": "Filter by experience",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "query",
+            "name": "lvl",
+            "description": "Filter by level",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string",
+                    "example": "SUCCESS"
+                  },
+                  "message": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Some error occurred while retrieving players"
+          }
+        }
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Finds a single Player with an ID",
+        "description": "",
+        "operationId": "findByIdPlayer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Player",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string",
+                    "example": "SUCCESS"
+                  },
+                  "message": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error retrieving Player with id={id}"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Update a Player by the id in the request",
+        "description": "",
+        "operationId": "updatePlayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Player",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Player object that will be created",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "player"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "player@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password"
+                },
+                "experience": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 99
+                },
+                "lvl": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string",
+                    "example": "SUCCESS"
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Player was updated successfully"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot update Player with id=${id}. Maybe Player was not found or req.body is empty!"
+          },
+          "500": {
+            "description": "Error updating Player with id={id}"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Delete a Player with id",
+        "description": "",
+        "operationId": "deletePlayer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Player",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string",
+                    "example": "SUCCESS"
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Player was deleted successfully!"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot delete Player with id=${id}. Maybe Player was not found!"
+          },
+          "500": {
+            "description": "Could not delete Player with id={id}"
+          }
+        }
+      }
+    },
+    "/players/exp/{id}": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Add player experience by certain amount",
+        "description": "",
+        "operationId": "getExperiencePlayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Player",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "EXP for player",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exp": {
+                  "type": "integer",
+                  "example": "99"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "result": {
+                    "type": "string",
+                    "example": "SUCCESS"
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "Player with id=1 has more experience."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot update Player with id=${id}"
+          },
+          "500": {
+            "description": "Error updating Player exp with id={id}"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Player": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
+        },
+        "username": {
+          "type": "string",
+          "example": "player"
+        },
+        "email": {
+          "type": "string",
+          "example": "player@mail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "experience": {
+          "type": "integer",
+          "format": "int32",
+          "example": 99
+        },
+        "lvl": {
+          "type": "integer",
+          "format": "int32",
+          "example": 5
+        }
+      },
+      "xml": {
+        "name": "Player"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

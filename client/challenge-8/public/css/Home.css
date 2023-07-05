@@ -1,0 +1,5 @@
+.home {
+    margin-top: 30vh;
+    display: grid;
+    justify-items: center; 
+}
